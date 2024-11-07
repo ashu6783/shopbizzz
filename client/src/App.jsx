@@ -10,8 +10,9 @@ import Register from './pages/Register'
 import Orders from './pages/Orders'
 import PlaceOrder from './pages/PlaceOrder'
 import Product from './pages/Product'
-import NavBar from './componenets/NavBar'
-import Footer from './componenets/Footer'
+import NavBar from './components/NavBar'
+import Footer from './components/Footer'
+import SearchBar from './components/SearchBar'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -20,6 +21,7 @@ function App() {
     <>
      <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]' >
       <NavBar/>
+      <SearchBar/>
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/collection' element={<Collection/>}/>
