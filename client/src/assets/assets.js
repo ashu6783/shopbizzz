@@ -12,7 +12,7 @@ import p_img15 from './p_img15.png'
 export const products = [
   {
     _id: "aaaaa",
-    name: "Women round neck Cotton Top",
+    name: "Men round neck Cotton Top",
     description: "A lightweight ,usually knitted,pullover shirt,close-fiiting",
     price: 100,
     image: [p_img6],
@@ -34,7 +34,7 @@ export const products = [
   },
   {
     _id: "aaafr",
-    name: "Women round neck Cotton Top",
+    name: "Men round neck Cotton Top",
     description: "A lightweight ,usually knitted,pullover shirt,close-fiiting",
     price: 500,
     image: [p_img8],
@@ -56,7 +56,7 @@ export const products = [
   },
   {
     _id: "aaaaaerge",
-    name: "Women round neck Cotton Top",
+    name: "men round neck Cotton Top",
     description: "A lightweight ,usually knitted,pullover shirt,close-fiiting",
     price: 100,
     image: [p_img10],
@@ -90,7 +90,7 @@ export const products = [
   },
   {
     _id: "aaaeraa",
-    name: "Women round neck Cotton Top",
+    name: "men round neck Cotton Top",
     description: "A lightweight ,usually knitted,pullover shirt,close-fiiting",
     price: 100,
     image: [p_img13],
