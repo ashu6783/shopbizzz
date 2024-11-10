@@ -15,6 +15,7 @@ import Footer from './components/Footer'
 import SearchBar from './components/SearchBar'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import About from './pages/About'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -35,6 +36,7 @@ function App() {
         <Route path='/orders' element={<Orders/>}/>
         <Route path='/placeorder' element={<PlaceOrder/>}/>
         <Route path='/product/:productId' element={<Product/>}/>
+        <Route path='/about' element={<About/>}/>
       </Routes>
       <Footer/>
      </div>
