@@ -29,7 +29,7 @@ const NavBar = () => {
       <div className='flex items-center gap-9'>
         <img onClick={()=>setShowSearch(true)} src="./search.png" className='w-5 cursor-pointer' alt="" />
         <div className='group relative'>
-            <img src="./account.png"  className='w-5 cursor-pointer' alt="" />
+          <Link to={'/login'}>  <img src="./account.png"  className='w-5 cursor-pointer' alt="" /></Link>
             <div className='group-hover:block hidden absolute dropdown-menu right-0 pt-3 '>
                 <div className='flex flex-col gap-2 w-36 py-3 px-5 bg-black text-gray-400 rounded'>
                     <p className='cursor-pointer hover:text-white'>My profile</p>
