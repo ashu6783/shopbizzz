@@ -13,8 +13,8 @@ const NavBar = () => {
   } = useContext(ShopContext);
   const logout = () => {
     navigate("/login");
-    localStorage.removeItem("token");
-    setToken("");
+    localStorage.removeItem('token');
+    setToken('');
     setCartItems({});
   };
   return (

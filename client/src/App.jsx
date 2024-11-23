@@ -16,6 +16,7 @@ import SearchBar from './components/SearchBar'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import About from './pages/About'
+import Verify from './pages/Verify'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -37,6 +38,7 @@ function App() {
         <Route path='/placeorder' element={<PlaceOrder/>}/>
         <Route path='/product/:productId' element={<Product/>}/>
         <Route path='/about' element={<About/>}/>
+        <Route path='/verify' element={<Verify/>}/>
       </Routes>
       <Footer/>
      </div>
