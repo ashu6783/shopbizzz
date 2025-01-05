@@ -33,7 +33,7 @@ const Verify = () => {
         `${backendUrl}/api/orders/verifyStripe`,  // Note the exact path
         {
           orderId,
-          success
+          success:success.toString(),
         },
         {
           headers: {
