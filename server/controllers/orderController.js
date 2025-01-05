@@ -43,8 +43,9 @@ const placeOrder = async (req, res) => {
 const placeOrderStripe = async (req, res) => {
     try {
         const { userId, items, amount, address } = req.body;
-        const { origin } = req.headers;
-        console.log("Stripe order received:", { userId, amount, address, items }); // Debug log
+        const origin = req.headers.origin || process.env.FRONTEND_URL;
+
+        console.log("Stripe order received:", { userId, amount, address, items });
 
         const orderData = {
             userId,
@@ -58,7 +59,8 @@ const placeOrderStripe = async (req, res) => {
 
         const newOrder = new orderModel(orderData);
         await newOrder.save();
-        console.log("Order saved successfully for Stripe:", newOrder); // Debug log
+
+        console.log("Order saved successfully for Stripe:", newOrder);
 
         const line_items = items.map((item) => ({
             price_data: {
@@ -82,22 +84,20 @@ const placeOrderStripe = async (req, res) => {
             quantity: 1,
         });
 
-        console.log("Line items created for Stripe:", line_items); // Debug log
-
         const session = await stripe.checkout.sessions.create({
             success_url: `${origin}/verify?success=true&orderId=${newOrder._id}`,
             cancel_url: `${origin}/verify?success=false&orderId=${newOrder._id}`,
             line_items,
             mode: 'payment',
         });
-        console.log("Stripe session created:", session); // Debug log
 
         res.json({ success: true, session_url: session.url });
     } catch (error) {
-        console.error("Error in Stripe order:", error); // Debug log
+        console.error("Error in Stripe order:", error);
         res.json({ success: false, message: error.message });
     }
 };
+
 
 //----------------- Stripe Verification -----------------
 const verifyStripe = async (req, res) => {
