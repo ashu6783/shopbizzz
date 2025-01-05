@@ -43,9 +43,10 @@ const placeOrder = async (req, res) => {
 const placeOrderStripe = async (req, res) => {
     try {
         const { userId, items, amount, address } = req.body;
-        const origin = req.headers.origin || process.env.FRONTEND_URL;
-
-        console.log("Stripe order received:", { userId, amount, address, items });
+        // Instead of using req.headers.origin, explicitly set your frontend URL
+        const frontendUrl = process.env.FRONTEND_URL || 'https://your-frontend-domain.com';
+        
+        console.log("Creating Stripe session with frontend URL:", frontendUrl); // Debug log
 
         const orderData = {
             userId,
@@ -59,8 +60,6 @@ const placeOrderStripe = async (req, res) => {
 
         const newOrder = new orderModel(orderData);
         await newOrder.save();
-
-        console.log("Order saved successfully for Stripe:", newOrder);
 
         const line_items = items.map((item) => ({
             price_data: {
@@ -85,8 +84,8 @@ const placeOrderStripe = async (req, res) => {
         });
 
         const session = await stripe.checkout.sessions.create({
-            success_url: `${origin}/verify?success=true&orderId=${newOrder._id}`,
-            cancel_url: `${origin}/verify?success=false&orderId=${newOrder._id}`,
+            success_url: `${frontendUrl}/verify?success=true&orderId=${newOrder._id}`,
+            cancel_url: `${frontendUrl}/verify?success=false&orderId=${newOrder._id}`,
             line_items,
             mode: 'payment',
         });
