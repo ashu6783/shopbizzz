@@ -45,7 +45,7 @@ const Verify = () => {
         verifyUrl,
         {
           orderId,
-          success: success.toString(),
+          success
         },
         {
           headers: {
