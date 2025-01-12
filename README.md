@@ -2,6 +2,18 @@
 
 ShopBizz is a modern e-commerce platform designed to simplify online shopping for businesses and consumers. With robust features and a user-friendly interface, ShopBizz is my personal project, built to showcase my skills and explore the development of an e-commerce platform.
 
+Below are attached images of the preview:
+![Screenshot 2025-01-11 214054](https://github.com/user-attachments/assets/6495e75d-e88d-4775-86c8-782b669a62f0)
+![Screenshot 2025-01-11 214325](https://github.com/user-attachments/assets/d3bee9e8-f6f8-42a1-9222-59de282ed826)
+![Screenshot 2025-01-11 214418](https://github.com/user-attachments/assets/633f4847-07f3-488a-ac11-85babe155fc3)
+![Screenshot 2025-01-11 214538](https://github.com/user-attachments/assets/e9fa073c-c351-4572-bbc7-08052a79e2a5)
+![Screenshot 2025-01-11 215122](https://github.com/user-attachments/assets/735fb98d-6888-4ec6-b78a-be99203b5ff4)
+
+
+
+
+
+
 ## Features
 
 - **MongoDB, Express.js, React.js, Node.js, Multer, Cloudinary, Stripe API**
