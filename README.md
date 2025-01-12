@@ -60,13 +60,7 @@ Follow these steps to set up ShopBizz on your local machine:
 - **Database:** MongoDB
 - **Authentication:** JSON Web Tokens (JWT)
 
-## License
 
-This project is licensed under the [MIT License](LICENSE).
-
-## Support
-
-If you encounter any issues or have questions, please feel free to reach out.
 
 ## Contact
 
@@ -81,5 +75,5 @@ ashutosh-gaurav-2abba7215)
 
 ---
 
-Start building your online store with ShopBizz today! 🚀
+
 
