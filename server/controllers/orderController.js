@@ -101,13 +101,13 @@ const placeOrderStripe = async (req, res) => {
 //----------------- Stripe Verification -----------------
 const verifyStripe = async (req, res) => {
     const { orderId, success } = req.body;
-    const userId = req.body.userId; // From authUser middleware
+    const userId = req.body.userId; // From verifyUser middleware
 
-    console.log("Verification request received:", { orderId, success, userId }); // Debug log
+    console.log("Verification request received:", { orderId, success, userId });
 
     try {
         if (!userId) {
-            console.error("User authentication failed"); // Debug log
+            console.error("User authentication failed");
             return res.status(401).json({
                 success: false,
                 message: "User authentication failed",
@@ -117,7 +117,7 @@ const verifyStripe = async (req, res) => {
         if (success === "true") {
             const order = await orderModel.findById(orderId);
             if (!order) {
-                console.error("Order not found for ID:", orderId); // Debug log
+                console.error("Order not found for ID:", orderId);
                 return res.status(404).json({
                     success: false,
                     message: "Order not found",
@@ -125,23 +125,25 @@ const verifyStripe = async (req, res) => {
             }
 
             await orderModel.findByIdAndUpdate(orderId, { payment: true });
-            await userModel.findByIdAndUpdate(userId, { cartData: {} });
 
-            console.log("Payment verified successfully for orderId:", orderId); // Debug log
+            // ✅ Clear the cart from CartModel, not userModel
+            await CartModel.findOneAndUpdate({ userId }, { $set: { cartData: {} } });
+
+            console.log("Payment verified successfully for orderId:", orderId);
             return res.json({
                 success: true,
                 message: "Payment verified successfully",
             });
         } else {
             await orderModel.findByIdAndDelete(orderId);
-            console.warn("Payment verification failed for orderId:", orderId); // Debug log
+            console.warn("Payment verification failed for orderId:", orderId);
             return res.json({
                 success: false,
                 message: "Payment verification failed",
             });
         }
     } catch (error) {
-        console.error("Error during Stripe verification:", error); // Debug log
+        console.error("Error during Stripe verification:", error);
         return res.status(500).json({
             success: false,
             message: error.message || "Internal server error",

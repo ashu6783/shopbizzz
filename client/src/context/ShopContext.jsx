@@ -1,4 +1,5 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useCallback } from "react";
+import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -98,7 +99,7 @@ const ShopContextProvider = (props) => {
   };
 
   //---------------------------Function to fetch product data from the backend----------
-  const getProductData = async () => {
+  const getProductData = useCallback(async () => {
     try {
       const response = await axios.get(`${backendUrl}/api/product/list`);
       if (response.data.success) {
@@ -110,10 +111,10 @@ const ShopContextProvider = (props) => {
       console.error(error);
       toast.error("Failed to fetch products: " + error.message);
     }
-  };
+  }, [backendUrl]);
 
   //----------------------Function to fetch user cart data-------------------------
-  const getUserCart = async (token) => {
+  const getUserCart = useCallback(async (token) => {
     try {
       const response = await axios.post(
         `${backendUrl}/api/cart/get`,
@@ -129,14 +130,14 @@ const ShopContextProvider = (props) => {
       console.error(error);
       toast.error("Failed to fetch cart data: " + error.message);
     }
-  };
+  }, [backendUrl]);
   
   
 
   //----------------------Effect to fetch product data-------------------------
   useEffect(() => {
     getProductData();
-  }, []);
+  }, [getUserCart, token, getProductData]);
 
 
 
@@ -150,7 +151,7 @@ const ShopContextProvider = (props) => {
       setCartItems({}); // Reset cart state
       localStorage.removeItem("token"); // Clear token from local storage
     }
-  }, [token]);
+  }, [token, getUserCart]);
   
 
   //----------------------Effect to initialize token and fetch cart-------------------------
@@ -160,14 +161,14 @@ const ShopContextProvider = (props) => {
       setToken(localToken);
       getUserCart(localToken);
     }
-  }, []);
+  }, [getUserCart, token]);
 
   //----------------------Effect to fetch cart when token changes-------------------------
   useEffect(() => {
     if (token) {
       getUserCart(token);
     }
-  }, [token]);
+  }, [token, getUserCart]);
 
   //----------------Define the context value to be provided to consumers---------------------------
   const value = {
@@ -195,6 +196,9 @@ const ShopContextProvider = (props) => {
       {props.children}
     </ShopContext.Provider>
   );
+};
+ShopContextProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default ShopContextProvider;

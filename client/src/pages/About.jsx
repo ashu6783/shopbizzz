@@ -1,91 +1,103 @@
-import React from "react";
 import Title from "../components/Title";
+import { Leaf, Truck, Users, Sprout, Globe } from 'lucide-react';
 
 const About = () => {
   return (
-    <div>
-      <div className="text-2xl text-center pt-8 border-t">
-        <Title text1={"ABOUT"} text2={"US"} />
-      </div>
-      <div className="my-10 flex flex-col md:flex-row gap-16">
-        <img className="w-full md:max-w-[450px]" src="./about.png" alt="" />
-        <div className="flex flex-col justify-center gap-6 md:w-2/4 text-gray-600">
-          <b className="text-2xl">About Shop-Bizz</b>
-          <p>
-            Welcome to Shop-Bizz, your premier destination for a seamless and
-            enjoyable online shopping experience. Our mission is to bring you
-            the best products, exceptional service, and unbeatable
-            convenience—all in one place.
-          </p>
-          <b className="text-2xl">Who We Are</b>
-          <p>
-            At Shop-Bizz, we are a passionate team of innovators, dreamers, and
-            doers, dedicated to transforming the way you shop online. With years
-            of expertise in the e-commerce industry, we have meticulously
-            curated a diverse range of products that cater to your every need
-            and desire. From the latest fashion trends and cutting-edge
-            electronics to unique home decor and essential everyday items, we
-            have something for everyone.
+    <div className="bg-gradient-to-b from-emerald-50 to-black rounded-tl-3xl rounded-tr-3xl py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto font-light">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <Title text1={"ABOUT"} text2={"OUR GREEN MISSION"} />
+          <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+            Crafting a sustainable future, one eco-friendly purchase at a time.
           </p>
         </div>
-      </div>
-      <hr />
-      <div>
-        <br />
-        <br />
-        <b className="text-2xl text-gray-600">Our Promise</b>
-        <p>
-            
-          We understand that shopping online should be more than just a
-          transaction—it should be an experience. That's why we are committed to
-          offering:
-          <ul>
-            <li>
-              <b>Quality Products:</b> We partner with reputable brands and
-              suppliers to ensure that every product meets our high standards of
-              quality and excellence.
-            </li>
-            <li>
-              <b>Exceptional Service:</b> Our customer support team is always
-              ready to assist you with any questions, concerns, or special
-              requests. Your satisfaction is our top priority.
-            </li>
-            <li>
-              <b>Fast & Reliable Shipping:</b> With our efficient logistics
-              network, we strive to deliver your orders promptly and securely,
-              no matter where you are.
-            </li>
-          </ul>
-        </p>
-        <br />
-        <br />
-        <hr />
-        <br />
-        <br />
-        <b className="text-2xl  text-gray-600">Our Vision</b>
-        <p>
-          We envision a world where online shopping is effortless, enjoyable,
-          and accessible to everyone. As we continue to grow, we remain
-          steadfast in our commitment to innovation, sustainability, and
-          customer satisfaction. At Shop-Bizz, we’re not just building a
-          store—we’re creating a community where shoppers can discover new
-          products, connect with like-minded individuals, and enjoy a truly
-          personalized shopping experience.
-        </p>
-        <br />
-        <br />
-        <hr />
-        <br />
-        <br />
-        <b className="text-2xl  text-gray-600">Join Us!</b>
-        <p>
-          Thank you for choosing Shop-Bizz. We invite you to explore our wide
-          selection of products, take advantage of our exciting offers, and
-          experience the future of online shopping today.
-        </p>
-        <br />
-        <br />
-        <hr />
+
+        {/* Intro Section */}
+        <div className="my-12 flex flex-col md:flex-row gap-8 lg:gap-16">
+          <div className="w-full md:w-2/5 lg:w-1/3">
+            <img 
+              className="w-full h-auto rounded-xl shadow-lg border-2 border-emerald-100 object-cover aspect-[4/3]" 
+              src="./about.png" 
+              alt="Our sustainable team" 
+            />
+            <div className="mt-4 bg-emerald-100 p-3 rounded-md text-sm text-emerald-800 italic text-center flex items-center justify-center gap-2">
+              <Leaf size={16} />
+              Rooted in sustainability since 2020
+            </div>
+          </div>
+          
+          <div className="flex flex-col justify-center gap-6 md:w-3/5 lg:w-2/3 text-gray-700">
+            <h2 className="text-2xl md:text-3xl font-semibold text-emerald-700">Welcome to Shop-Bizz</h2>
+            <p className="leading-relaxed text-lg">
+              Shop-Bizz is your gateway to eco-conscious living. We’re dedicated to delivering sustainable products, exceptional service, and a shopping experience that nurtures both people and planet.
+            </p>
+            <p className="leading-relaxed text-lg">
+              Our team of green innovators curates ethically sourced fashion, energy-efficient tech, natural home goods, and more—designed for the conscious consumer who values quality and sustainability.
+            </p>
+          </div>
+        </div>
+
+        {/* Our Promise Section */}
+        <div className="my-12 bg-white p-6 md:p-8 rounded-xl shadow-sm border border-emerald-100">
+          <h2 className="text-2xl md:text-3xl font-semibold text-emerald-700 mb-6 text-center">Our Eco-Promise</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-4 bg-emerald-50 rounded-lg transition-all hover:shadow-md">
+              <div className="flex items-center mb-4">
+                <Sprout size={28} className="text-emerald-600 mr-3" />
+                <h3 className="font-medium text-emerald-700 text-lg">Sustainable Products</h3>
+              </div>
+              <p className="text-gray-600">
+                Partnering with eco-friendly brands to bring you goods made with organic, recycled, and ethically sourced materials.
+              </p>
+            </div>
+            <div className="p-4 bg-emerald-50 rounded-lg transition-all hover:shadow-md">
+              <div className="flex items-center mb-4">
+                <Users size={28} className="text-emerald-600 mr-3" />
+                <h3 className="font-medium text-emerald-700 text-lg">Green Service</h3>
+              </div>
+              <p className="text-gray-600">
+                Our dedicated team ensures your shopping journey is seamless, supportive, and aligned with sustainable values.
+              </p>
+            </div>
+            <div className="p-4 bg-emerald-50 rounded-lg transition-all hover:shadow-md">
+              <div className="flex items-center mb-4">
+                <Truck size={28} className="text-emerald-600 mr-3" />
+                <h3 className="font-medium text-emerald-700 text-lg">Carbon-Neutral Delivery</h3>
+              </div>
+              <p className="text-gray-600">
+                Fast, secure shipping with 100% carbon offset—because every delivery should tread lightly on the Earth.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Vision Section */}
+        <div className="my-12">
+          <h2 className="text-2xl md:text-3xl font-semibold text-green-300 mb-6 text-center">Our Vision</h2>
+          <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-emerald-100">
+            <p className="leading-relaxed text-lg text-gray-700">
+              We dream of a world where shopping uplifts communities and preserves our planet. At Shop-Bizz, we’re building a green community—connecting eco-conscious shoppers with sustainable solutions for a brighter, cleaner future.
+            </p>
+          </div>
+        </div>
+
+        {/* Call to Action */}
+        <div className="my-12 bg-emerald-600 text-white p-8 rounded-xl shadow-lg text-center">
+          <h2 className="text-2xl md:text-3xl font-semibold mb-4">Join Our Eco-Movement!</h2>
+          <p className="max-w-2xl mx-auto leading-relaxed mb-6">
+            Explore our curated collections, embrace sustainable living, and be part of the future of responsible shopping.
+          </p>
+          <button className="bg-white text-emerald-600 font-medium px-8 py-3 rounded-full hover:bg-emerald-50 transition-all duration-300">
+            Shop Sustainably Now
+          </button>
+        </div>
+
+        {/* Footer Note */}
+        <div className="pt-6 pb-12 text-center text-sm text-emerald-300 flex items-center justify-center gap-2">
+          <Globe size={18} className="text-emerald-300" />
+          <p >One tree planted per purchase—growing a greener planet together.</p>
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { ShopContext } from "../context/ShopContext";
 import ProductItem from "./ProductItem";
 import Title from "../components/Title";
@@ -17,7 +18,7 @@ const RelatedProducts = ({ category, subCategory }) => {
 
       setRelated(productsCopy.slice(0, 5));
     }
-  }, [products]);
+  }, [products, category, subCategory]);
 
   return (
     <div className="my-24">
@@ -37,6 +38,10 @@ const RelatedProducts = ({ category, subCategory }) => {
       </div>
     </div>
   );
+};
+RelatedProducts.propTypes = {
+  category: PropTypes.string.isRequired,
+  subCategory: PropTypes.string.isRequired,
 };
 
 export default RelatedProducts;

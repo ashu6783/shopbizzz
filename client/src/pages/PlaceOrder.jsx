@@ -1,11 +1,10 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import Title from "../components/Title";
 import CartTotal from "../components/CartTotal";
 import { ShopContext } from "../context/ShopContext";
 import { toast } from "react-toastify";
 import axios from "axios";
-
-
+import { Leaf, CreditCard, Truck, CheckCircle } from 'lucide-react';
 
 const PlaceOrder = () => {
   const [method, setMethod] = useState("cod");
@@ -19,6 +18,7 @@ const PlaceOrder = () => {
     delivery_fee,
     products,
   } = useContext(ShopContext);
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -62,181 +62,189 @@ const PlaceOrder = () => {
         amount: getCartAmount() + delivery_fee,
       };
 
-    
-
       switch (method) {
-        //---------------api calls for cod-------------------
-        case "cod":
+        case "cod": {
           const response = await axios.post(
-            backendUrl + '/api/orders/place',
+            `${backendUrl}/api/orders/place`,
             orderData,
-            {headers:{token}}
+            { headers: { token } }
           );
           if (response.data.success) {
             setCartItems({});
-            toast.success("Your Shop-Bizz Order placed successfully!");
+            toast.success("Your Eco-Friendly Order Placed Successfully!");
             navigate('/orders');
           } else {
             toast.error(response.data.message);
           }
           break;
-        case 'stripe':
+        }
+        case "stripe": {
           const responseStripe = await axios.post(
-            backendUrl + '/api/orders/stripe',
+            `${backendUrl}/api/orders/stripe`,
             orderData,
-            {headers:{token}}
+            { headers: { token } }
           );
           if (responseStripe.data.success) {
             const { session_url } = responseStripe.data;
             window.location.replace(session_url);
-            
           } else {
             toast.error(responseStripe.data.message);
           }
           break;
-
+        }
         default:
           break;
       }
     } catch (error) {
       console.error(error);
-      toast.error(error.message);
+      toast.error("An error occurred while placing your order.");
     }
   };
 
   return (
     <form
       onSubmit={onSubmitHandler}
-      className="flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[40vh] border-t"
+      className="bg-gradient-to-b from-emerald-50 to-black rounded-tl-3xl rounded-tr-3xl py-12 px-4 sm:px-6 lg:px-8"
     >
-      {/* -----------Left side------------ */}
-      <div className="flex flex-col gap-4 w-full sm:max-w-[480px]">
-        <div className="text-xl sm:text-2xl my-3">
-          <Title text1={"DELIVERY"} text2={"INFORMATION"} />
+      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12">
+        {/* Left Side - Delivery Info */}
+        <div className="w-full lg:w-1/2 bg-white p-6 rounded-xl shadow-sm border border-emerald-100">
+          <div className="text-xl md:text-2xl mb-6">
+            <Title text1={"ECO"} text2={"DELIVERY INFO"} />
+          </div>
+          <div className="flex flex-col gap-4">
+            <div className="flex gap-4">
+              <input
+                onChange={onChangeHandler}
+                name="firstName"
+                required
+                value={formData.firstName}
+                className="border border-emerald-200 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                type="text"
+                placeholder="First Name"
+              />
+              <input
+                onChange={onChangeHandler}
+                name="lastName"
+                value={formData.lastName}
+                className="border border-emerald-200 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                type="text"
+                placeholder="Last Name"
+              />
+            </div>
+            <input
+              onChange={onChangeHandler}
+              name="email"
+              value={formData.email}
+              className="border border-emerald-200 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              type="email"
+              placeholder="Email Address"
+            />
+            <input
+              onChange={onChangeHandler}
+              name="street"
+              value={formData.street}
+              className="border border-emerald-200 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              type="text"
+              placeholder="Street Address"
+            />
+            <div className="flex gap-4">
+              <input
+                onChange={onChangeHandler}
+                name="city"
+                value={formData.city}
+                className="border border-emerald-200 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                type="text"
+                placeholder="City"
+              />
+              <input
+                onChange={onChangeHandler}
+                name="state"
+                value={formData.state}
+                className="border border-emerald-200 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                type="text"
+                placeholder="State"
+              />
+            </div>
+            <div className="flex gap-4">
+              <input
+                onChange={onChangeHandler}
+                name="zipcode"
+                value={formData.zipcode}
+                className="border border-emerald-200 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                type="number"
+                placeholder="Zip Code"
+              />
+              <input
+                onChange={onChangeHandler}
+                name="country"
+                value={formData.country}
+                className="border border-emerald-200 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                type="text"
+                placeholder="Country"
+              />
+            </div>
+            <input
+              onChange={onChangeHandler}
+              name="phone"
+              value={formData.phone}
+              className="border border-emerald-200 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              type="tel"
+              placeholder="Phone Number"
+            />
+          </div>
         </div>
-        <div className="flex gap-3">
-          <input
-            onChange={onChangeHandler}
-            name="firstName"
-            required
-            value={formData.firstName}
-            className="border border-gray-300 rounded p-2 w-full"
-            type="text"
-            placeholder="First name"
-          />
-          <input
-            onChange={onChangeHandler}
-            name="lastName"
-            value={formData.lastName}
-            className="border border-gray-300 rounded p-2 w-full"
-            type="text"
-            placeholder="Last name"
-          />
-        </div>
-        <input
-          onChange={onChangeHandler}
-          name="email"
-          value={formData.email}
-          className="border border-gray-300 rounded p-2 w-full"
-          type="email"
-          placeholder="Email address"
-        />
-        <input
-          onChange={onChangeHandler}
-          name="street"
-          value={formData.street}
-          className="border border-gray-300 rounded p-2 w-full"
-          type="text"
-          placeholder="Street Name"
-        />
-        <div className="flex gap-3">
-          <input
-            onChange={onChangeHandler}
-            name="city"
-            value={formData.city}
-            className="border border-gray-300 rounded p-2 w-full"
-            type="text"
-            placeholder="City"
-          />
-          <input
-            onChange={onChangeHandler}
-            name="state"
-            value={formData.state}
-            className="border border-gray-300 rounded p-2 w-full"
-            type="text"
-            placeholder="State"
-          />
-        </div>
-        <div className="flex gap-3">
-          <input
-            onChange={onChangeHandler}
-            name="zipcode"
-            value={formData.zipcode}
-            className="border border-gray-300 rounded p-2 w-full"
-            type="number"
-            placeholder="Zip-code"
-          />
-          <input
-            onChange={onChangeHandler}
-            name="country"
-            value={formData.country}
-            className="border border-gray-300 rounded p-2 w-full"
-            type="text"
-            placeholder="Country"
-          />
-        </div>
-        <input
-          onChange={onChangeHandler}
-          name="phone"
-          value={formData.phone}
-          className="border border-gray-300 rounded p-2 w-full"
-          type="number"
-          placeholder="Phone"
-        />
-      </div>
 
-      {/* Right side */}
-      <div className="mt-8">
-        <div className="mt-8 min-w-80">
+        {/* Right Side - Cart Total & Payment */}
+        <div className="w-full lg:w-1/2 flex flex-col gap-6">
           <CartTotal />
-        </div>
-        <div className="mt-12">
-          <Title text1={"PAYMENT"} text2={"METHOD"} />
-          <div className="flex gap-4 flex-col lg:flex-row">
-            <div
-              onClick={() => setMethod("stripe")}
-              className="flex border-gray-800 items-center gap-3 border p-2 px-3 cursor-pointer "
-            >
-              <p
-                className={`min-w-3.5 h-3.5 border border-gray-900 rounded-full ${
-                  method === "stripe" ? "bg-green-400" : ""
+          
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-emerald-100">
+            <Title text1={"PAYMENT"} text2={"METHOD"} />
+            <div className="flex flex-col sm:flex-row gap-4 mt-4">
+              <div
+                onClick={() => setMethod("stripe")}
+                className={`flex items-center gap-3 border border-emerald-200 p-3 rounded-lg cursor-pointer transition-all ${
+                  method === "stripe" ? "bg-emerald-50 border-emerald-500" : "hover:bg-emerald-50"
                 }`}
-              ></p>
-              <img className="h-12 mx-4" src="./stripe.png" alt="" />
+              >
+                <CheckCircle
+                  size={20}
+                  className={`text-emerald-600 ${method === "stripe" ? "opacity-100" : "opacity-0"}`}
+                />
+                <CreditCard size={24} className="text-emerald-600" />
+                <p className="text-gray-700 font-medium">Pay with Stripe</p>
+              </div>
+              <div
+                onClick={() => setMethod("cod")}
+                className={`flex items-center gap-3 border border-emerald-200 p-3 rounded-lg cursor-pointer transition-all ${
+                  method === "cod" ? "bg-emerald-50 border-emerald-500" : "hover:bg-emerald-50"
+                }`}
+              >
+                <CheckCircle
+                  size={20}
+                  className={`text-emerald-600 ${method === "cod" ? "opacity-100" : "opacity-0"}`}
+                />
+                <Truck size={24} className="text-emerald-600" />
+                <p className="text-gray-700 font-medium">Cash on Delivery</p>
+              </div>
             </div>
-           
-            <div
-              onClick={() => setMethod("cod")}
-              className="flex border-gray-800 items-center gap-3 border p-2 px-3 cursor-pointer "
-            >
-              <p
-                className={`min-w-3.5 h-3.5 border border-gray-900 rounded-full ${
-                  method === "cod" ? "bg-green-400" : ""
-                }`}
-              ></p>
-              <p className="text-gray-600 text-base font-medium mx-4">
-                Cash on Delivery
-              </p>
+            <div className="flex justify-end mt-6">
+              <button
+                type="submit"
+                className="bg-emerald-600 text-white px-8 py-3 rounded-full flex items-center gap-2 hover:bg-emerald-700 transition-all"
+              >
+                <Leaf size={20} />
+                Place Eco Order
+              </button>
             </div>
           </div>
-          <div className="w-full text-end mt-8">
-            <button
-              type="submit"
-              className="bg-black rounded-xl text-white px-20 py-3 text-sm"
-            >
-              PLACE ORDER
-            </button>
-          </div>
+
+          {/* Eco Note */}
+          <p className="text-sm text-emerald-300 flex items-center gap-2 justify-end">
+            <Leaf size={16} className="text-emerald-300" />
+            Your order supports a greener planet
+          </p>
         </div>
       </div>
     </form>

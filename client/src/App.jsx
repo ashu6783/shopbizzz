@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
@@ -13,17 +12,16 @@ import Product from "./pages/Product";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import SearchBar from "./components/SearchBar";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import About from "./pages/About";
 import Verify from "./pages/Verify";
 
 function App() {
-  const [count, setCount] = useState(0);
 
   return (
     <>
-      <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
+      <div >
         <ToastContainer />
         <NavBar />
         <SearchBar />

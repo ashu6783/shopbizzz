@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import Title from "../components/Title";
 import CartTotal from "../components/CartTotal";
+import { Trash2, Leaf, ShoppingCart } from 'lucide-react';
 
 const Cart = () => {
-  const { products, currency, cartItems, updateQuantity, navigate } =
-    useContext(ShopContext);
+  const { products, currency, cartItems, updateQuantity, navigate } = useContext(ShopContext);
   const [cartData, setCartData] = useState([]);
 
   useEffect(() => {
@@ -27,80 +27,103 @@ const Cart = () => {
   }, [cartItems, products]);
 
   return (
-    <div className="border-t pt-14">
-      <div className="text-2xl mb-3">
-        <Title text1="YOUR" text2="CART" />
-      </div>
-      <div>
-        {cartData.map((item, index) => {
-          const productData = products.find(
-            (product) => product._id === item._id
-          );
-          return productData ? (
-            <div
-              key={index}
-              className="py-4 border-t text-gray-700 grid grid-cols-[4fr_0.5fr_0.5fr] sm:grid-cols-[4fr_0.5fr_0.5fr] items-center gap-4"
-            >
-              <div className="flex items-start gap-6">
-                <img
-                  className="w-16 sm:w-20"
-                  src={productData.image[0]}
-                  alt={productData.name}
-                />
-                <div>
-                  <p className="text-sm sm:text-lg font-medium">
-                    {productData.name}
-                  </p>
-                  <div className="flex items-center gap-5 mt-2">
-                    <p>
-                      {currency}
-                      {productData.price}
-                    </p>
-                    <p className="px-2 sm:px-3 sm:py-1 border bg-slate-500">
-                      {item.size}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <input
-                onChange={(e) =>
-                  e.target.value === "" || e.target.value === "0"
-                    ? null
-                    : updateQuantity(
-                        item._id,
-                        item.size,
-                        Number(e.target.value)
-                      )
-                }
-                className="border max-w-10 sm:max-20 px-1 sm:px-2 py-1"
-                type="number"
-                min={1}
-                defaultValue={item.quantity}
-              />
-              <img
-                onClick={() => {
-                  updateQuantity(item._id, item.size, 0);
-                }}
-                className="w-4 mr-4 sm:w-5 cursor-pointer"
-                src="litter.png"
-                alt="Remove"
-              />
-            </div>
-          ) : null;
-        })}
-      </div>
-      <div className="flex justify-end my-20">
-        <div className="w-full sm:w-[450px]">
-          <CartTotal />
-          <div className="w-full text-end">
-            <button
-              onClick={() => navigate("/placeorder")}
-              className="bg-black rounded-lg text-white text-sm my-8 px-8 py-3"
-            >
-              PROCEED TO CHECKOUT!
-            </button>
-          </div>
+    <div className="bg-gradient-to-b from-emerald-50 rounded-tl-3xl rounded-tr-3xl to-black py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-2xl md:text-3xl mb-8">
+          <Title text1={"YOUR"} text2={"ECO CART"} />
         </div>
+
+        {/* Cart Items */}
+        <div className="space-y-6">
+          {cartData.length === 0 ? (
+            <p className="text-center text-gray-600 flex items-center justify-center gap-2">
+              <ShoppingCart size={20} className="text-emerald-600" />
+              Your eco-cart is empty. Start shopping sustainably!
+            </p>
+          ) : (
+            cartData.map((item, index) => {
+              const productData = products.find((product) => product._id === item._id);
+              if (!productData) return null;
+
+              return (
+                <div
+                  key={index}
+                  className="bg-white p-4 rounded-xl shadow-sm border border-emerald-100 grid grid-cols-[4fr_1fr_0.5fr] sm:grid-cols-[4fr_1fr_0.5fr] items-center gap-4 md:gap-6 transition-all hover:shadow-md"
+                >
+                  {/* Product Info */}
+                  <div className="flex items-start gap-4 md:gap-6">
+                    <img
+                      className="w-16 sm:w-20 rounded-lg border border-emerald-200 object-cover"
+                      src={productData.image[0]}
+                      alt={productData.name}
+                    />
+                    <div>
+                      <p className="text-sm sm:text-lg font-semibold text-gray-800">
+                        {productData.name}
+                      </p>
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mt-2 text-gray-600">
+                        <p className="flex items-center gap-1">
+                          <Leaf size={16} className="text-emerald-600" />
+                          {currency}{productData.price}
+                        </p>
+                        <p className="px-2 py-1 bg-emerald-50 text-emerald-700 rounded-md text-sm">
+                          Size: {item.size}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Quantity Input */}
+                  <input
+                    onChange={(e) =>
+                      e.target.value === "" || e.target.value === "0"
+                        ? null
+                        : updateQuantity(item._id, item.size, Number(e.target.value))
+                    }
+                    className="border border-emerald-200 rounded-md w-16 sm:w-20 px-2 py-1 text-center focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    type="number"
+                    min={1}
+                    defaultValue={item.quantity}
+                  />
+
+                  {/* Remove Button */}
+                  <button
+                    onClick={() => updateQuantity(item._id, item.size, 0)}
+                    className="text-emerald-600 hover:text-emerald-800 transition-colors"
+                  >
+                    <Trash2 size={20} />
+                  </button>
+                </div>
+              );
+            })
+          )}
+        </div>
+
+        {/* Cart Total & Checkout */}
+        {cartData.length > 0 && (
+          <div className="flex justify-end mt-12">
+            <div className="w-full sm:w-[450px] flex flex-col gap-6">
+              <CartTotal />
+              <div className="w-full text-end">
+                <button
+                  onClick={() => navigate("/placeorder")}
+                  className="bg-emerald-600 text-white px-8 py-3 rounded-full flex items-center justify-center gap-2 hover:bg-emerald-700 transition-all"
+                >
+                  <Leaf size={20} />
+                  Proceed to Checkout
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Eco Footer Note */}
+        {cartData.length > 0 && (
+          <p className="mt-8 text-center text-sm text-white flex items-center justify-center gap-2">
+            <Leaf size={16} className="text-emerald-300" />
+            Your cart supports sustainable living
+          </p>
+        )}
       </div>
     </div>
   );

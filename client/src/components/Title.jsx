@@ -1,12 +1,21 @@
-import React from 'react'
+import PropTypes from 'prop-types'
 
-const Title = ({text1,text2}) => {
+const Title = ({text1, text2}) => {
   return (
-    <div className='inline-flex gap-2 items-center mb-3'>
-      <p className='text-gray-500'>{text1} <span className='text-gray-700 font-medium'>{text2}</span></p>
-      <p className='w-8 sm:w-12 h-[1px] sm:h-[2px] bg-gray-700'></p>
+    <div className="flex items-center mb-4 group">
+      <div className="mr-3">
+        <h2 className="text-white font-light">
+          {text1} <span className="text-sky-500 font-semibold transition-colors group-hover:text-sky-400">{text2}</span>
+        </h2>
+      </div>
+      <div className="flex-grow h-px bg-gradient-to-r from-gray-300 to-transparent max-w-24 transition-all group-hover:max-w-32 group-hover:from-blue-400"></div>
     </div>
   )
+}
+
+Title.propTypes = {
+  text1: PropTypes.string.isRequired,
+  text2: PropTypes.string.isRequired,
 }
 
 export default Title
