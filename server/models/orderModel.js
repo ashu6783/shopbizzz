@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema({
   userId: {
-    type: mongoose.Schema.Types.ObjectId, // ✅ Better to store as ObjectId for relations
-    ref: "users", // ✅ Refers to users collection (optional, if you want population support)
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: "users",
     required: true
   },
   items: {
